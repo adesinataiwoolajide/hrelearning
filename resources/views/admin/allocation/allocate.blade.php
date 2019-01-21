@@ -8,7 +8,8 @@
 				    <ol class="breadcrumb">
 				    	<li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Home</a></li>
 				    	<li class="breadcrumb-item"><a href="{{ route('allocate', $partnering->id)}}">Allocate Course</a></li>
-			            <li class="breadcrumb-item"><a href="{{route('partner.index')}}">View Partners</a></li>
+				    	<li class="breadcrumb-item"><a href="{{ route('allocate.courselist', $partnering->id)}}">Allocated Course List</a></li>
+			            <li class="breadcrumb-item"><a href="{{route('partner.index')}}">View All Partners</a></li>
 			            
 			            <li class="breadcrumb-item active" aria-current="page">Adding Course To Partners</li>
 			         </ol>
@@ -19,7 +20,7 @@
 
 		    		@include('layouts.message')
 		          	<div class="card">
-		            	<div class="card-header"><i class="fa fa-table"></i> Please Fill The Below Form To Add The Partner Course </div>
+		            	<div class="card-header"><i class="fa fa-table"></i> Please Fill The Below Form To Add Course To {{$partnering->partner_name}}</div>
 	            		<div class="card-body">
 	            			<form action="{{route('allocate.store')}}" method="POST" enctype="multipart/form-data">
 	            				{{ csrf_field() }}
@@ -103,63 +104,77 @@
 			 <div class="row">
 		    	<div class="col-lg-12">
 		          	<div class="card">
-		          		
-		            	<div class="card-header"><i class="fa fa-table"></i> List of Allocated Courses For {{$partnering->partner_name}}</div>
-	            		<div class="card-body">
-	              			<div class="table-responsive">
-	              				<table id="example" class="table table-bordered">
-	              					<thead>
-					                    <tr>
-					                       <th>Serial Number</th>
-					                        <th>Course Name</th>
-					                        <th>Course Material</th>
-					                        <th>Course Category</th>
-					                        <th>Instructor</th>
-					                        <th> Operations</th>
-					                    </tr>
-					                </thead>
+		          		@if(count($all) ==0)
+            				<div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i> The Course Allocation is Empty</div>
+            				<h3><p style="color: red" align="center"></p> </h3>
+            			@else
+			            	<div class="card-header"><i class="fa fa-table"></i> List of Allocated Courses For {{$partnering->partner_name}}</div>
+		            		<div class="card-body">
 
-					                <tfoot>
-					                    <tr>
-					                        <th>Serial Number</th>
-					                        <th>Course Name</th>
-					                        <th>Course Material</th>
-					                        <th>Course Category</th>
-					                        <th>Instructor</th>
-					                        <th> Operations</th>
-					                    </tr>
-					                </tfoot>
-					                <tbody>
-					                	<?php $number =1; ?>
-					                	@foreach($all as $part)
+		              			<div class="table-responsive">
+		              				<table id="example" class="table table-bordered">
+		              					<thead>
 						                    <tr>
-						                        <td>
-						                        	{{$number}}
-						                        	<a href="" class="btn btn-danger">
-						                        		<i class="fa fa-trash-o"></i>
-						                        	</a>
-						                        	<a href="" class="btn btn-success">
-						                        		<i class="fa fa-pencil"></i>
-						                        	</a>
+						                       <th>Serial Number</th>
+						                        <th>Course Name</th>
+						                        <th>Course Material</th>
+						                        <th>Course Category</th>
+						                        <th>Instructor</th>
+						                       
+						                    </tr>
+						                </thead>
 
-						                        </td>
-						                        <td>{{$part->course_id}}</td>
-						                       	<td></td>
-						                       	<td></td>
-						                       	<td>{{$part->instructor_id}}</td>
-						                       	<td>
-						                        	<a href="" class="btn btn-danger">Allocate Course</a>
-						                        	<a href="Add-staff" class="btn btn-primary">Add Staff</a>
-						                        </td>
-
+						                <tfoot>
+						                    <tr>
+						                        <th>Serial Number</th>
+						                        <th>Course Name</th>
+						                        <th>Course Material</th>
+						                        <th>Course Category</th>
+						                        <th>Instructor</th>
 						                        
-						                    </tr><?php
-						                    $number++; ?>
-						                @endforeach
-					                </tbody>
-					               
-	              				</table>
-	              			</div>
+						                    </tr>
+						                </tfoot>
+						                <tbody>
+						                	<?php $number =1; ?>
+						                	@foreach($all as $part)
+							                    <tr>
+							                        <td>
+							                        	{{$number}}
+							                        	<a href="{{route('allocate.delete', $part->id)}}" class="btn btn-danger">
+							                        		<i class="fa fa-trash-o"></i>
+							                        	</a>
+							                        	<a href="" class="btn btn-success">
+							                        		<i class="fa fa-pencil"></i>
+							                        	</a>
+
+							                        </td>
+							                        	@foreach(gettingCourses($part->course_id) as $ropo)
+									                        <td>{{$ropo->course_name}}</td>
+									                       	 <td>
+									                        	<img src="{{asset('styling/book.png')}}" class="logo-icon" alt="logo icon">
+									                        	<a href="{{asset('course-materials/'.$ropo->course_material)}}" target="_blank"> {{$ropo->course_material}}</a>
+									                        </td>
+									                       	<td>
+									                       		@foreach(getCourseCategory($ropo->category_id) as $show)
+									                        		{{$show->category_name}}
+									                        	@endforeach
+									                       	</td>
+									                    @endforeach
+							                       	<td>
+							                       		@foreach(usersDetails($part->instructor_id) as $low)
+							                       			{{$low->name}}
+							                       		@endforeach
+							                       	</td>
+							                       
+							                        
+							                    </tr><?php
+							                    $number++; ?>
+							                @endforeach
+						                </tbody>
+						               
+		              				</table>
+		              			</div>
+	              			@endif
 	              		</div>
 	             
 	              	</div>

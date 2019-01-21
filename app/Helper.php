@@ -6,6 +6,12 @@
    		])->get();
     }
 
+    function usersDetails($id){
+        return \DB::table('users')->where([
+            "id" => $id
+        ])->get();
+    }
+
     function loadCourseAllocaation($id){
         return \DB::table('partners')->where([
             "id" => $id

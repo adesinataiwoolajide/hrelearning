@@ -53,6 +53,8 @@ Route::group(["prefix" => "admin"], function(){
     	
         Route::get("/partnercourse/{id}", "AllocationController@courseallocation")->name("allocate");
         Route::post("/save", "AllocationController@store")->name("allocate.store");
+        Route::get("/delete/{id}", "AllocationController@destroy")->name("allocate.delete");
+        Route::get("/courselist/{id}", "AllocationController@partnerCourse")->name("allocate.courselist");
 
     });
 

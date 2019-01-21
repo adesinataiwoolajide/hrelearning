@@ -53,7 +53,10 @@
 			 <div class="row">
 		    	<div class="col-lg-12">
 		          	<div class="card">
-		          		
+		          		@if(count($category) ==0)
+			            	<div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i> The List is Empty</div>
+
+			            @else
 			            	<div class="card-header"><i class="fa fa-table"></i> List of Saved Course Categories</div>
 		            		<div class="card-body">
 		              			<div class="table-responsive">
@@ -94,6 +97,7 @@
 		              				</table>
 		              			</div>
 		              		</div>
+		              	@endif
 		             
 	              	</div>
 	            </div>

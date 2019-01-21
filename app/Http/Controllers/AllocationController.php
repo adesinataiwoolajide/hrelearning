@@ -21,9 +21,23 @@ class AllocationController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function partnerCourse($id)
     {
-        //
+       $partnering =  Partner::find($id); 
+        $course = Course::orderBy("course_name", "asc")->get(); 
+        $partner = $this->model->all();
+        $all = Allocation::where('partner_id', $id)->get();
+
+        $category = CourseCategory::orderBy("category_name", "asc")->get();
+        return view('admin.allocation.courselist')->with(
+            [
+                "partner" =>$partner,
+                "course" => $course,
+                "partnering" => $partnering,
+                "category" =>$category,
+                "all" => $all,
+            ]
+        );
     }
 
     public function courseallocation($id)
@@ -86,7 +100,7 @@ class AllocationController extends Controller
         ];
 
         if($this->model->create($data)){
-            return redirect()->route("partner.index")->with("success", "You Have Added The Course To The Partner Successfully");
+            return redirect()->back()->with("success", "You Have Added The Course To The Partner Successfully");
         } 
      }
 
@@ -133,6 +147,12 @@ class AllocationController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $allocation =  $this->model->show($id);  
+        
+        //deleting the selected Id
+        if($allocation->delete($id)){
+            //redirect back to the cinema page
+            return redirect()->back()->with("success", "You Have Deleted The Allocated Course Successfully");
+        }
     }
 }

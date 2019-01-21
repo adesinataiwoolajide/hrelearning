@@ -80,7 +80,7 @@
       	<li>
        		 <a href="" class="waves-effect">
 	          	<i class="zmdi zmdi-card-travel"></i>
-	          	<span>Course</span>
+	          	<span>Course Manager</span>
           		<i class="fa fa-angle-left pull-right"></i>
         	</a>
 	        <ul class="sidebar-submenu">

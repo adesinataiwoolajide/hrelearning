@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\{User, Course, Instructor, CourseCategory, Learner, Partner};
+use App\{User, Course, Instructor, CourseCategory, Learner, Partner, Allocation};
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Repositories\Repository;
@@ -18,6 +18,8 @@ class AdministratorController extends Controller
             "partner" => Partner::all(),
             "instructor" => Instructor::all(),
             "learner" => Learner::all(),
+            "allocation" => Allocation::all(),
+            "user" => User::all(),
         ];
         return view("admin.dashboard")->with($data);
     }

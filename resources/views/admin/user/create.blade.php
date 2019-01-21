@@ -106,51 +106,55 @@
 			 <div class="row">
 		    	<div class="col-lg-12">
 		          	<div class="card">
-		          		
-		            	<div class="card-header"><i class="fa fa-table"></i> List of Saved Users</div>
-	            		<div class="card-body">
-	              			<div class="table-responsive">
-	              				<table id="example" class="table table-bordered">
-	              					<thead>
-					                    <tr>
-					                        <th>Serial Number</th>
-					                        <th>Full Name</th>
-					                        <th>E-Mail</th>
-					                        <th>User Type</th>
-					                        <th>Operations</th>
-					                    </tr>
-					                </thead>
+		          		@if(count($user) ==0)
+			            	<div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i> The List is Empty
+			            	</div>
 
-					                <tfoot>
-					                    <tr>
-					                        <th>Serial Number</th>
-					                        <th>Full Name</th>
-					                        <th>E-Mail</th>
-					                        <th>User Type</th>
-					                        <th>Operations</th>
-					                    </tr>
-					                </tfoot>
-					                <tbody>
-					                	<?php $number =1; ?>
-					                	@foreach($user as $users)
+			            @else
+			            	<div class="card-header"><i class="fa fa-table"></i> List of Saved Users</div>
+		            		<div class="card-body">
+		              			<div class="table-responsive">
+		              				<table id="example" class="table table-bordered">
+		              					<thead>
 						                    <tr>
-						                        <td>{{$number}}
-						                        	<a href="{{route('user.delete', $users->id)}}" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
-						                        	<a href="" class="btn btn-success"><i class="fa fa-pencil"></i></a>
-						                        </td>
-						                        <td>{{$users->name}}</td>
-						                        <td>{{$users->email}}</td>
-						                        <td>{{ interpreteRole($users->is_admin) }}</td>
-						                        <td>{{ interpreteRoleStatus($users->status) }}</td>
-						                    </tr><?php
-						                    $number++; ?>
-						                @endforeach
-					                </tbody>
-					               
-	              				</table>
-	              			</div>
-	              		</div>
-		             
+						                        <th>Serial Number</th>
+						                        <th>Full Name</th>
+						                        <th>E-Mail</th>
+						                        <th>User Type</th>
+						                        <th>Operations</th>
+						                    </tr>
+						                </thead>
+
+						                <tfoot>
+						                    <tr>
+						                        <th>Serial Number</th>
+						                        <th>Full Name</th>
+						                        <th>E-Mail</th>
+						                        <th>User Type</th>
+						                        <th>Operations</th>
+						                    </tr>
+						                </tfoot>
+						                <tbody>
+						                	<?php $number =1; ?>
+						                	@foreach($user as $users)
+							                    <tr>
+							                        <td>{{$number}}
+							                        	<a href="{{route('user.delete', $users->id)}}" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>
+							                        	<a href="" class="btn btn-success"><i class="fa fa-pencil"></i></a>
+							                        </td>
+							                        <td>{{$users->name}}</td>
+							                        <td>{{$users->email}}</td>
+							                        <td>{{ interpreteRole($users->is_admin) }}</td>
+							                        <td>{{ interpreteRoleStatus($users->status) }}</td>
+							                    </tr><?php
+							                    $number++; ?>
+							                @endforeach
+						                </tbody>
+						               
+		              				</table>
+		              			</div>
+		              		</div>
+		             	@endif
 	              	</div>
 	            </div>
 	        </div>

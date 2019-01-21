@@ -88,8 +88,9 @@
 			 <div class="row">
 		    	<div class="col-lg-12">
 		          	<div class="card">
-		          		
-			            	<div class="card-header"><i class="fa fa-table"></i> List of Saved courses</div>
+	          			@if(count($course) == 0)
+		            		<div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i> The Course List is Empty</div>
+		            	@else
 		            		<div class="card-body">
 		              			<div class="table-responsive">
 		              				<table id="example" class="table table-bordered">
@@ -125,10 +126,13 @@
 
 							                        </td>
 							                        <td>
+							                        	{{$courses->course_name}}
+							                        	
+							                        </td>
+							                        <td>
 							                        	<img src="{{asset('styling/book.png')}}" class="logo-icon" alt="logo icon">
 							                        	<a href="{{asset('course-materials/'.$courses->course_material)}}" target="_blank"> {{$courses->course_material}}</a>
 							                        </td>
-							                        <td>{{$courses->course_name}}</td>
 							                        <td>@foreach(getCourseCategory($courses->category_id) as $show)
 							                        		{{$show->category_name}}
 							                        	@endforeach
@@ -141,6 +145,7 @@
 		              				</table>
 		              			</div>
 		              		</div>
+	              		@endif
 		             
 	              	</div>
 	            </div>

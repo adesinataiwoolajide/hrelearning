@@ -68,7 +68,11 @@
 			 <div class="row">
 		    	<div class="col-lg-12">
 		          	<div class="card">
-		          		
+		          		@if(count($partner) ==0)
+			            	<div class="card-header" align="center" style="color: red"><i class="fa fa-table"></i> The List is Empty
+			            	</div>
+
+			            @else
 			            	<div class="card-header"><i class="fa fa-table"></i> List of Saved partners</div>
 		            		<div class="card-body">
 		              			<div class="table-responsive">
@@ -110,7 +114,10 @@
 							                        	
 							                        </td>
 							                        <td>
-							                        	<a href="{{ route('allocate', $partners->id)}}" class="btn btn-danger">Allocate Course</a>
+							                        	<a href="{{ route('allocate', $partners->id)}}" class="btn btn-danger">
+							                        	Add Course</a>
+							                        	<a href="{{ route('allocate.courselist', $partners->id)}}" class="btn btn-danger">
+							                        	View Course</a>
 							                        	<a href="Add-staff" class="btn btn-primary">Add Staff</a>
 							                        </td>
 							                        
@@ -122,7 +129,7 @@
 		              				</table>
 		              			</div>
 		              		</div>
-		             
+		             	@endif
 	              	</div>
 	            </div>
 	        </div>
