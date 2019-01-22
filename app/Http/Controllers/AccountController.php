@@ -13,14 +13,23 @@ class AccountController extends Controller
             "password" => $request->input("password"),
         ];
         if(Auth::attempt($data)){
-            $request->session()->flash('success', 'Login successfully');
-            return redirect()->route("admin.dashboard");
+            $usertype = Auth::user()->is_admin;
+            if($usertype == "Admin"){
+                $request->session()->flash('success', 'Login successfully');
+                return redirect()->route("admin.dashboard");
+            }elseif($usertype == "Partner"){
+                return redirect()->route("student.dashboard");
+            }else{
+                $message = "Invalid User " ;
+                return redirect()->back()->with("error", $message);
+            }
         }else{
             $message = "Invalid User Name or Password" ;
             return redirect()->back()->with("error", $message);
-            ;
         }
     }
+
+    
 
     public function logout(Request $request)
     {

@@ -44,92 +44,135 @@
    		</div>
 		<div class="user-details">
 		    <div class="media align-items-center user-pointer collapsed" data-toggle="collapse" data-target="#user-dropdown">
-		      	<div class="avatar">
-		      		<img class="mr-3 side-user-img" src="{{asset('styling/assets/images/avatars/avatar-13.png')}}" alt="user avatar">
+		      	<div class="avatar"><?php $partner_email = Auth::user()->email; 
+		      		
+		      		if(($partner_email = Auth::user()->email) AND (Auth::user()->is_admin == "Partner")){ ?>
+			      		@foreach(loadPartnerImage($partner_email) as $photo)
+			      			<img class="mr-3 side-user-img" src="{{asset('partner-logo/'.$photo->partner_logo)}}" alt="user avatar">
+			      		@endforeach <?php
+			      	}else{ ?>
+			      		<img class="mr-3 side-user-img" src="{{asset('styling/assets/images/avatars/avatar-13.png')}}" alt="user avatar"><?php
+			      	} ?>
 		      	</div>
 		        <div class="media-body">
-		       		<h6 class="side-user-name">Mark Jhonsan</h6>
+		       		<h6 class="side-user-name"><?php $name = Auth::user()->name; ?> {{ $name }}</h6>
 		      	</div>
 		    </div>
      		<div id="user-dropdown" class="collapse">
 		      	<ul class="user-setting-menu">
 		            <li><a href="javaScript:void();"><i class="icon-user"></i>  My Profile</a></li>
-		            <li><a href="javaScript:void();"><i class="icon-settings"></i> Setting</a></li>
-		      		<li><a href="javaScript:void();"><i class="icon-power"></i> Logout</a></li>
+		      		<li><a href="{{ route('admin.logout') }}"><i class="icon-power"></i> Logout</a></li>
 		      	</ul>
 		     </div>
       	</div>
-   	<ul class="sidebar-menu do-nicescrol">
-      	<li class="sidebar-header">MAIN NAVIGATION</li>
-      	<li>
-	        <a href="{{route('admin.dashboard')}}" class="waves-effect">
-	          	<i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
-	          	<small class="badge float-right badge-light">View</small>
-	        </a>
-	    </li>
-	    
-	    <li>
-	       	 <a href="" class="waves-effect">
-	          	<i class="zmdi zmdi-layers"></i>
-	          	<span>Course Category</span> <i class="fa fa-angle-left pull-right"></i>
-	        </a>
-	        <ul class="sidebar-submenu">
-			    <li><a href="{{route('coursecategory.index')}}"><i class="zmdi zmdi-long-arrow-right"></i> View Categories</a></li>
-	        </ul>
-      	</li>
-      	<li>
-       		 <a href="" class="waves-effect">
-	          	<i class="zmdi zmdi-card-travel"></i>
-	          	<span>Course Manager</span>
-          		<i class="fa fa-angle-left pull-right"></i>
-        	</a>
-	        <ul class="sidebar-submenu">
-	          <li><a href="{{route('course.index')}}"><i class="zmdi zmdi-long-arrow-right"></i> View Course</a></li>
-	        </ul>
-      	</li>
-	    <li>
-	        <a href="javaScript:void();" class="waves-effect">
-	          	<i class="zmdi zmdi-chart"></i> <span>Partners</span>
-	          	<i class="fa fa-angle-left float-right"></i>
-	        </a>
-	        <ul class="sidebar-submenu">
-	          	<li><a href="{{route('partner.index')}}"><i class="zmdi zmdi-long-arrow-right"></i> View Partners</a></li>
-	        </ul>
-       </li>
-       <li>
-	        <a href="javaScript:void();" class="waves-effect">
-	          	<i class="zmdi zmdi-chart"></i> <span>Users</span>
-	          	<i class="fa fa-angle-left float-right"></i>
-	        </a>
-	        <ul class="sidebar-submenu">
-	          	<li><a href="{{route('user.create')}}"><i class="zmdi zmdi-long-arrow-right"></i> View Users</a></li>
-	        </ul>
-       </li>
-	    <li>
-	        <a href="javaScript:void();" class="waves-effect">
-	          	<i class="zmdi zmdi-invert-colors"></i> <span>Instructors</span>
-	          	<i class="fa fa-angle-left float-right"></i>
-	        </a>
-	        <ul class="sidebar-submenu">
-	          	<li><a href="{{route('coursecategory.index')}}"><i class="zmdi zmdi-long-arrow-right"></i> Font Awesome</a></li>
-	          	<li><a href="{{route('coursecategory.index')}}"><i class="zmdi zmdi-long-arrow-right"></i> Material Design</a></li>
-	        </ul>
-	    </li>
-	    <li>
-	        <a href="{{route('coursecategory.index')}}" class="waves-effect">
-	          	<i class="zmdi zmdi-calendar-check"></i> <span>Learners</span>
-	          	<small class="badge float-right badge-light">View</small>
-	        </a>
-	    </li>
+	   	<ul class="sidebar-menu do-nicescrol">
+	      	<li class="sidebar-header">MAIN NAVIGATION</li>
+	      	
+		    <?php 
+		    $user_type = Auth::user()->is_admin; ?>
+	        @if($user_type == "Admin")
+	        	<li>
+			        <a href="{{route('admin.dashboard')}}" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+			    <li>
+			        <a href="{{route('coursecategory.index')}}" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Course Category</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
 
-	    <li>
-	        <a href="{{ route("admin.logout") }}" class="waves-effect">
-	          	<i class="zmdi zmdi-calendar-check"></i> <span>Log Out</span>
-	          	<small class="badge float-right badge-light">Sign Out</small>
-	        </a>
-	    </li>
+			    <li>
+			        <a href="{{route('course.index')}}" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Course Manger</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
 
-    </ul>
+			    <li>
+			        <a href="{{route('partner.index')}}" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Partner</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+
+			    <li>
+			        <a href="{{route('user.create')}}" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>User</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+
+			    <li>
+			        <a href="" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Students</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+
+			    <li>
+			        <a href="" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Instructor</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+			@elseif($user_type == "Partner")
+				<li>
+			        <a href="{{route('admin.dashboard')}}" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+			    <li>
+			        <a href="" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Bio Data</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+				<li>
+			        <a href="" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Course Material</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+
+			    <li>
+			        <a href="" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Feed Back</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+
+			    <li>
+			        <a href="" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>My Instructor</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+			@else
+				<li>
+			        <a href="{{route('student.dashboard')}}" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Dashboard</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+				<li>
+			        <a href="" class="waves-effect">
+			          	<i class="zmdi zmdi-view-dashboard"></i> <span>Students</span>
+			          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+			        </a>
+			    </li>
+			@endif
+		    <li>
+		        <a href="{{ route('admin.logout') }}" class="waves-effect">
+		          	<i class="zmdi zmdi-lock"></i> <span>Log Out</span>
+		          	<small class="badge float-right badge-light"><i class="zmdi zmdi-long-arrow-right"></i></small>
+		        </a>
+		    </li>
+
+	    </ul>
    
    </div>
 

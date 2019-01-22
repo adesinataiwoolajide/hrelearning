@@ -62,9 +62,11 @@ Route::group(["prefix" => "admin"], function(){
     	
         Route::get("/create", "UserController@index")->name("user.create");
         Route::post("/save", "UserController@store")->name("user.save");
-        Route::get("/delete/{id}", "UserController@destroy")->name("user.delete");
-
-        
+        Route::get("/delete/{id}", "UserController@destroy")->name("user.delete");  
 
     });
+});
+
+Route::group(["prefix" => "student"], function(){
+    Route::get("/dashboard", "LearnerController@index")->name("student.dashboard");
 });

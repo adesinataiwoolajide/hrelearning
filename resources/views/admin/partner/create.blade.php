@@ -23,7 +23,7 @@
 	            				{{ csrf_field() }}
 		            			
 		            			<div class="form-group row ">
-		            				<div class="col-sm-5">
+		            				<div class="col-sm-3">
 					                    <input type="file" class="form-control" name="partner_logo" required>
 					                    <span style="color: red">** This Field is Required **</span>
 					                     @if ($errors->has('partner_logo'))
@@ -38,7 +38,7 @@
 										    </div>
                                         @endif  
 					                 </div>
-					                <div class="col-sm-5">
+					                <div class="col-sm-3">
 					                    <input type="text" class="form-control"  name="partner_name" placeholder="Partner Name Here" min="4" required>
 					                    <span style="color: red">** This Field is Required **</span>
 					                     @if ($errors->has('partner_name'))
@@ -53,9 +53,25 @@
 										    </div>
                                         @endif  
 					                </div>
+
+					                <div class="col-sm-3">
+					                    <input type="email" class="form-control"  name="partner_email" placeholder="Partner E-Mail Here" min="4" required>
+					                    <span style="color: red">** This Field is Required **</span>
+					                     @if ($errors->has('partner_email'))
+                                            <div class="alert alert-danger alert-dismissible" role="alert">
+										        <button type="button" class="close" data-dismiss="alert">&times;</button>
+										        <div class="alert-icon contrast-alert">
+										            <i class="fa fa-check"></i>
+										        </div>
+										        <div class="alert-message">
+										            <span><strong>Error!</strong> {{ $errors->first('partner_emails') }} !</span>
+										        </div>
+										    </div>
+                                        @endif  
+					                </div>
 					                
 
-					                 <div class="col-sm-2">
+					                 <div class="col-sm-3">
 					                      <button type="submit" class="btn btn-primary">ADD PARTNER</button>
 					                 </div>
 						            
@@ -79,19 +95,21 @@
 		              				<table id="example" class="table table-bordered">
 		              					<thead>
 						                    <tr>
-						                        <th>Serial Number</th>
-						                        <th>Partner Name</th>
-						                        <th>Partner Logo</th>
-						                        <th> Operations</th>
+						                        <th> S/N</th>
+						                        <th> Name</th>
+						                        <th> Logo</th>
+						                        <th> E-Mail</th>
+						                        <th> Opt</th>
 						                    </tr>
 						                </thead>
 
 						                <tfoot>
 						                    <tr>
-						                        <th>Serial Number</th>
-						                        <th>Partner Name</th>
-						                        <th>Partner Logo</th>
-						                        <th> Operations</th>
+						                        <th> S/N</th>
+						                        <th> Name</th>
+						                        <th> Logo</th>
+						                        <th> E-Mail</th>
+						                        <th> Opt</th>
 						                    </tr>
 						                </tfoot>
 						                <tbody>
@@ -109,16 +127,17 @@
 
 							                        </td>
 							                        <td>{{$partners->partner_name}}</td>
+							                        
 							                        <td>
 							                        	<img src="{{asset('partner-logo/'.$partners->partner_logo)}}" class="logo-icon" alt="logo icon" style="width: 50px; height: 50px"> 
 							                        	
 							                        </td>
+							                        <td>{{$partners->partner_email}}</td>
 							                        <td>
 							                        	<a href="{{ route('allocate', $partners->id)}}" class="btn btn-danger">
-							                        	Add Course</a>
-							                        	<a href="{{ route('allocate.courselist', $partners->id)}}" class="btn btn-danger">
-							                        	View Course</a>
-							                        	<a href="Add-staff" class="btn btn-primary">Add Staff</a>
+							                        	<i class="fa fa-plus"></i> Course</a>
+							                        	<a href="{{ route('allocate.courselist', $partners->id)}}" class="btn btn-primary">
+							                        	<i class="fa fa-list"></i> Course</a>
 							                        </td>
 							                        
 							                    </tr><?php

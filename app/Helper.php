@@ -18,6 +18,20 @@
         ])->get();
     }
 
+    function loadAllocaation($partner_id){
+        return \DB::table('course_allocation')->where([
+            "partner_id" => $partner_id
+        ])->get();
+    }
+
+    function loadPartnerImage($partner_email){
+        return \DB::table('partners')->where([
+            "partner_email" => $partner_email
+        ])->get();
+    }
+
+
+
 
     function getCourseCategory($id){
         return \DB::table('course_categories')->where([

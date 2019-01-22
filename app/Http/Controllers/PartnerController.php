@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\{ Partner, Course, User, CourseCategory};
 use App\Repositories\Repository;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use DB;
 
 class PartnerController extends Controller
@@ -52,6 +54,8 @@ class PartnerController extends Controller
          $this->validate($request, [
             'partner_name' =>'required|min:5|max:255|unique:partners',
             'partner_logo' => 'file|required|mimes:jpeg,bmp,png,PNG,jpg,JPEG|max:1999',
+            'partner_email' => 'required|min:5|max:255|unique:partners',
+           // 'password' => 'nullable',
         ]);
 
         if($request->hasFile('partner_logo')){
@@ -69,17 +73,31 @@ class PartnerController extends Controller
         }
 
         if(Partner::where("partner_name", $request->input("partner_name"))->exists()){
-            return redirect()->back()->with("error", "You Have Added The Partner Before");
+            return redirect()->back()->with("error", "You Have Added A Partner with this name Before");
+        }
+
+        if(User::where("email", $request->input("partner_email"))->exists()){
+           return redirect()->back()->with("error", "The E-Mail is In Use By Another User");
         }
 
         $data = [
             'partner' => new Partner,
             "partner_name" => $request->input('partner_name'),
             "partner_logo" =>  $fileNameToStore,
+            'partner_email' => $request->input('partner_email'),
+            "password" => Hash::make($request->input("partner_email")),
         ];
+        
+        $use = new User([
+            "email" => $request->input("partner_email"),
+            "name" => $request->input("partner_name"),
+            "password" => Hash::make($request->input("partner_email")),
+            "is_admin" => 'Partner',
+            "status" => 1,
+        ]);
 
-        if($this->model->create($data)){
-            return redirect()->route("partner.index")->with("success", "You Have Added The Partner Successfully");
+        if($use->save() AND ($this->model->create($data))){
+           return redirect()->route("partner.index")->with("success", "You Have Added The Partner Successfully");
         } 
     }
 

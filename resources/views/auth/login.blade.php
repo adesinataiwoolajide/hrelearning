@@ -8,7 +8,7 @@
             <div class="card">
                 @include('layouts.message')
                 <div class="card-header" align="center">
-                    <img src="{{asset('admin/user.png')}}" style="width: 50px; height: 50px;" align="center">
+                    <img src="{{asset('styling/user.jpg')}}" style="width: 50px; height: 50px;" align="center">
                 </div>
 
                 <div class="card-body">
@@ -55,11 +55,20 @@
                             </div>
                         </div>
 
+                       <!--  <script type="text/javascript">
+                            var xmlhttp = new XmLhTTPrEQUEST();
+                            XmlHttp.open(method, url, True);
+                            xmlhttp.setRequesthEADER();
+                            
+                            xmlHttp.send();
+                        </script> -->
+
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
                                 <button type="submit" class="btn btn-primary">
-                                    {{ __('LOGIN TO ACCESS THE SYSTEM') }}
+                                    {{ __('LOGIN AS ADMIN') }}
                                 </button>
+                                
                             </div>
                         </div>
                         

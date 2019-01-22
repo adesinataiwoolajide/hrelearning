@@ -8,6 +8,6 @@ class Partner extends Model
 {
     protected $table = 'partners';
     protected $fillable = [
-        'partner_name','partner_logo',
+        'partner_name','partner_logo', 'partner_email', 'password',
     ];
 }

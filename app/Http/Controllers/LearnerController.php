@@ -3,9 +3,20 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\{User, Course, Instructor, CourseCategory, Learner, Partner, Allocation};
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\Repositories\Repository;
 class LearnerController extends Controller
 {
+
+    protected $model;
+
+    public function __construct(Learner $learner)
+    {
+       // set the model
+       $this->model = new Repository($learner);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -13,8 +24,13 @@ class LearnerController extends Controller
      */
     public function index()
     {
-        //
+
+        $learner = $this->model->all();
+        return view('student.dashboard')->with([
+            "learner" => $learner,
+        ]);
     }
+
 
     /**
      * Show the form for creating a new resource.
